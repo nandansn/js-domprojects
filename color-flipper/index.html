@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Color Flipper</title>
+    <style>
+      body {
+        background-color: aliceblue;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <input type="button" value="Simple Color" id="simple-btn" />
+      <input type="button" value="Hex Color" id="hex-btn" />
+    </div>
+    <div class="container">
+      <p id="color-details"></p>
+      <input type="button" value="Click Here" id="clr-btn" />
+    </div>
+  </body>
+  <script>
+    const colorCodes = [
+      "#FF0000",
+      "#00FF00",
+      "#0000FF",
+      "#FFFF00",
+      "#00FFFF",
+      "#FF00FF",
+      "#C0C0C0",
+      "#808080",
+      "#800000",
+      "#808000",
+    ];
+
+    let colorBtn = document.getElementById("clr-btn");
+    let hexBtn = document.getElementById("hex-btn");
+    let pText = document.querySelector("#color-details");
+    let hexColorFlag = false;
+    let hexCode = "FF8633";
+
+    hexBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      hexColorFlag = true;
+      console.log(hexColorFlag);
+    });
+
+    colorBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+
+      if (hexColorFlag) {
+        let num = parseInt(hexCode, 16);
+        num += 40;
+        hexCode = num.toString(16);
+        document.body.style.backgroundColor = "#" + hexCode;
+      } else {
+        let index = Math.round(Math.random() * colorCodes.length);
+        document.body.style.backgroundColor = colorCodes[index];
+      }
+      pText.textContent = `Background color: ${document.body.style.backgroundColor}`;
+    });
+  </script>
+</html>

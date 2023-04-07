@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Counter</title>
+    <style>
+      body {
+        background-color: #ebf5fb;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      div.container {
+        width: 40%;
+        height: 25%;
+        border: 3px solid #5dade2;
+        margin-inline: auto;
+        text-align: center;
+        padding: 2rem;
+        margin-top: 25rem;
+        border-radius: 10px;
+      }
+
+      p {
+        font-size: 5rem;
+      }
+      div.buttons {
+        margin-top: 1rem;
+        display: grid;
+        grid-template-columns: auto auto auto;
+        grid-template-rows: auto;
+        gap: 1rem;
+      }
+
+      input {
+        padding: 0.5rem;
+        font-size: 1rem;
+        letter-spacing: 1px;
+        text-align: center;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <p id="count">0</p>
+      <div class="buttons">
+        <input type="button" value="Decrease" id="btn-decrease" />
+        <input type="button" value="Reset" id="btn-reset" />
+        <input type="button" value="Increase" id="btn-increase" />
+      </div>
+    </div>
+  </body>
+  <script>
+    let countPara = document.querySelector("#count");
+
+    let decreaseButton = document.querySelector("#btn-decrease");
+    let resetButton = document.querySelector("#btn-reset");
+    let increaseButton = document.querySelector("#btn-increase");
+
+    let globalCount = 0;
+
+    decreaseButton.addEventListener("click", function (evt) {
+      evt.preventDefault();
+      globalCount -= 1;
+      paraStyle();
+      countPara.textContent = globalCount.toString();
+    });
+
+    resetButton.addEventListener("click", function (evt) {
+      evt.preventDefault();
+      globalCount = 0;
+      paraStyle();
+      countPara.textContent = globalCount.toString();
+    });
+
+    increaseButton.addEventListener("click", function (evt) {
+      evt.preventDefault();
+      globalCount += 1;
+      paraStyle();
+      countPara.textContent = globalCount.toString();
+    });
+
+    function paraStyle() {
+      if (globalCount === 0) {
+        countPara.style.color = "black";
+      } else if (globalCount > 0) {
+        countPara.style.color = "green";
+      } else {
+        countPara.style.color = "red";
+      }
+    }
+  </script>
+</html>
