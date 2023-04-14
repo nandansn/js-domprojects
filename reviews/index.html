@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reviews</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      div.container {
+        width: 40%;
+        height: 40%;
+        margin-inline: auto;
+        margin-top: 25rem;
+        text-align: center;
+        padding: 2rem;
+      }
+
+      div.profile img {
+        border-radius: 50%;
+        width: 12rem;
+        height: 12rem;
+      }
+
+      div.profile h3 {
+        padding: 0.5rem;
+        letter-spacing: 1px;
+        font-size: 1.5rem;
+      }
+
+      div.profile .job-title {
+        padding: 0.2rem;
+        letter-spacing: 1px;
+        font-size: 1rem;
+      }
+
+      div.profile .review-msg {
+        padding: 0.7rem;
+        letter-spacing: 0.75px;
+        font-size: 1rem;
+      }
+
+      div.button-container {
+        display: grid;
+        grid-template-columns: repeat(2, 2.2rem);
+        grid-gap: 10px; /* adjust this value to change the gap between buttons */
+        justify-content: center;
+        margin-bottom: 1rem;
+      }
+
+      div.button-container input {
+        width: 2.2rem;
+        height: 2rem;
+      }
+
+      div.random-btn input {
+        width: 5rem;
+        height: 2rem;
+        letter-spacing: 1px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="profile">
+        <img src="" alt="image" id="pic" />
+        <h3 class="name-title" id="name"></h3>
+        <h5 class="job-title" id="job"></h5>
+        <p class="review-msg" id="msg"></p>
+      </div>
+      <div class="button-container">
+        <input type="button" value="<" id="prev" />
+        <input type="button" value=">" id="next" />
+      </div>
+      <div class="random-btn">
+        <input type="button" value="Random" id="random" />
+      </div>
+    </div>
+  </body>
+
+  <script>
+    const reviews = [
+      {
+        name: "John Doe",
+        image: "https://randomuser.me/api/portraits/men/1.jpg",
+        title: "Full Stack Developer",
+        review:
+          "The food at the hotel was amazing! I particularly enjoyed the steak and the chocolate cake for dessert.",
+      },
+      {
+        name: "Jane Smith",
+        image: "https://randomuser.me/api/portraits/women/2.jpg",
+        title: "Front-end Developer",
+        review:
+          "The hotel had a great variety of food options and everything was well-prepared. The shrimp tacos were my favorite!",
+      },
+      {
+        name: "Bob Johnson",
+        image: "https://randomuser.me/api/portraits/men/3.jpg",
+        title: "Back-end Developer",
+        review:
+          "I was impressed by the quality of the food at the hotel. The chicken alfredo was delicious and the service was excellent.",
+      },
+      {
+        name: "Sarah Lee",
+        image: "https://randomuser.me/api/portraits/women/4.jpg",
+        title: "Software Engineer",
+        review:
+          "The hotel had a great breakfast selection, including fresh fruit, pastries, and omelettes made to order.",
+      },
+      {
+        name: "Mike Chen",
+        image: "https://randomuser.me/api/portraits/men/5.jpg",
+        title: "UI Designer",
+        review:
+          "I loved the food at the hotel! The sushi was especially good, and the presentation was beautiful.",
+      },
+      {
+        name: "Emily Wong",
+        image: "https://randomuser.me/api/portraits/women/6.jpg",
+        title: "UX Designer",
+        review:
+          "The hotel had a great variety of vegetarian options, including a delicious quinoa salad and roasted vegetables.",
+      },
+      {
+        name: "Tom Wilson",
+        image: "https://randomuser.me/api/portraits/men/7.jpg",
+        title: "Software Developer",
+        review:
+          "The hotel's steakhouse was amazing. The ribeye was cooked to perfection and the sides were all delicious.",
+      },
+      {
+        name: "Samantha Kim",
+        image: "https://randomuser.me/api/portraits/women/8.jpg",
+        title: "Web Developer",
+        review:
+          "The hotel had a great wine selection, and the staff was knowledgeable about recommending pairings with the food.",
+      },
+      {
+        name: "David Li",
+        image: "https://randomuser.me/api/portraits/men/9.jpg",
+        title: "Mobile Developer",
+        review:
+          "I really enjoyed the sushi at the hotel. It was fresh and flavorful, and the prices were reasonable.",
+      },
+      {
+        name: "Amy Liu",
+        image: "https://randomuser.me/api/portraits/women/10.jpg",
+        title: "Software Engineer",
+        review:
+          "The hotel had a great poolside bar with tasty appetizers and cocktails. I particularly enjoyed the margaritas!",
+      },
+    ];
+
+    let next = document.querySelector("#next");
+    let prev = document.querySelector("#prev");
+    prev.disabled = true;
+
+    let random = document.querySelector("#random");
+
+    let index = 0;
+    let reviewsLen = reviews.length;
+
+    let name = document.getElementById("name");
+    let job = document.getElementById("job");
+    let message = document.getElementById("msg");
+    let image = document.getElementById("pic");
+
+    setReview(0);
+
+    next.addEventListener("click", function (e) {
+      console.log("next click");
+
+      if (index === reviews.length - 1) {
+        setReview(index);
+        enableDisable();
+      } else {
+        prev.disabled = false;
+        index += 1;
+        setReview(index);
+        enableDisable();
+      }
+    });
+
+    prev.addEventListener("click", function (e) {
+      console.log("prev click");
+
+      if (index === 0) {
+        setReview(index);
+        enableDisable();
+      } else {
+        next.disabled = false;
+        index -= 1;
+        setReview(index);
+        enableDisable();
+      }
+    });
+
+    random.addEventListener("click", function (e) {
+      index = Math.round(Math.random(9) * 10, 1);
+      enableDisable();
+      setReview(index);
+    });
+
+    function enableDisable() {
+      if (index <= 0) {
+        prev.disabled = true;
+        next.disabled = false;
+        index = 0;
+      } else if (index >= reviews.length - 1) {
+        prev.disabled = false;
+        next.disabled = true;
+        index = reviews.length - 1;
+      } else {
+        prev.disabled = false;
+        next.disabled = false;
+      }
+    }
+
+    function setReview(index) {
+      name.textContent = reviews[index].name;
+      job.textContent = reviews[index].title;
+      message.textContent = reviews[index].review;
+      image.src = reviews[index].image;
+    }
+  </script>
+</html>
